@@ -1,0 +1,3719 @@
+#include<stdio.h>
+#include<conio.h>
+#include<alloc.h>
+int a[100];
+int create()
+{
+ int n,i;
+ printf("\nHow many elements you want to insert?");
+ scanf("%d",&n);
+ for(i=0;i<n;i++)
+ {
+  printf("\nEnter the element number %d:",i+1);
+  scanf("%d",&a[i]);
+ }
+ printf("\nThe list is successfully created");
+ return(n);
+}
+void reverse(int n)
+{
+ int i;
+ printf("\nThe list in reverse order is:");
+ for(i=n-1;i>=0;i--)
+ {
+  printf("%d",a[i]);
+ }
+}
+int search(int n)
+{
+ int i,key;
+ printf("\nEnter the key value:");
+ scanf("%d",&key);
+ for(i=0;i<n;i++)
+ {
+  if(a[i]==key)
+  {
+   printf("The given number is at position %d",i+1);
+   return i;
+  }
+ }
+ printf("\nThe number is not in the list");
+ return 0;
+}
+int insert(int n,int a[])
+{
+ int i,key,pos;
+ printf("\nEnter the key value:");
+ scanf("%d",&key);
+ printf("\nEnter the position:");
+ scanf("%d",&pos);
+ for(i=n-1;i>=pos-1;i--)
+ {
+  a[i+1]=a[i];
+ }
+ a[pos-1]=key;
+ n++;
+ return n;
+}
+void display(int n)
+{
+ int i;
+ printf("\nThe list is:");
+ for(i=0;i<n;i++)
+ {
+  printf("%d",a[i]);
+ }
+}
+int delet(int n,int a[])
+{
+ int i,pos;
+ pos=search(n);
+ printf("\nThe element is deleted");
+ for(i=pos;i<n-1;i++)
+ {
+  a[i]=a[i+1];
+ }
+ n--;
+ return n;
+}
+void count(int n)
+{
+ int i,count=0;
+ for(i=0;i<n;i++)
+ {
+  count++;
+ }
+ printf("%d",count);
+}
+void main()
+{
+ int choice,l;
+ clrscr();
+ printf("\n****Array implementation of ordered list****");
+ do
+ {
+  printf("\n 1.Create  2.Insert  3.Display  4.Reverse  5.Search  6.Delete 7.Count  8.Exit");
+  printf("\nEnter the option:");
+  scanf("%d",&choice);
+  switch(choice)
+  {
+   case 1:
+     l=create();
+     break;
+   case 2:
+     l=insert(l,a);
+     break;
+   case 3:
+     display(l);
+     break;
+   case 4:
+     reverse(l);
+     break;
+   case 5:
+     search(l);
+     break;
+   case 6:
+     l=delet(l,a);
+     break;
+   case 7:
+     count(l);
+     break;
+   case 8:
+     exit(0);
+  }
+ }while(choice<7);
+ getch();
+}
+OUTPUT:
+****Array implementation of ordered list****
+
+ 1.Create  2.Insert  3.Display  4.Reverse  5.Search  6.Delete 7.Count  8.Exit
+Enter the option:1
+How many elements you want to insert?3
+Enter the element number 1:2
+Enter the element number 2:4
+Enter the element number 3:6
+The list is successfully created
+ 1.Create  2.Insert  3.Display  4.Reverse  5.Search  6.Delete 7.Count  8.Exit
+Enter the option:3
+The list is:246
+ 1.Create  2.Insert  3.Display  4.Reverse  5.Search  6.Delete 7.Count  8.Exit
+Enter the option:2
+Enter the key value:8
+Enter the position:4
+The list is:246
+ 1.Create  2.Insert  3.Display  4.Reverse  5.Search  6.Delete 7.Count  8.Exit
+Enter the option:2
+Enter the key value:8
+Enter the position:4
+1.Create  2.Insert  3.Display  4.Reverse  5.Search  6.Delete 7.Count  8.Exit
+Enter the option:3
+The list is:2468
+ 1.Create  2.Insert  3.Display  4.Reverse  5.Search  6.Delete 7.Count  8.Exit
+Enter the option:5
+Enter the key value:4
+The given number is at position 2
+ 1.Create  2.Insert  3.Display  4.Reverse  5.Search  6.Delete 7.Count  8.Exit
+Enter the option:6
+Enter the key value:8
+The given number is at position 4
+The element is deleted
+ 1.Create  2.Insert  3.Display  4.Reverse  5.Search  6.Delete 7.Count  8.Exit
+Enter the option:4
+The list in reverse order is:642
+ 1.Create  2.Insert  3.Display  4.Reverse  5.Search  6.Delete 7.Count  8.Exit
+Enter the option:8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Linked list implementation of List ADT (Single linked list)
+
+#include<stdio.h>
+#include<conio.h>
+#include<alloc.h>
+#include<stdlib.h>
+struct node
+{
+ int data;
+ struct node *next;
+}*start=NULL;
+void create()
+{
+ char ch;
+ struct node *current,*new_node;
+ do
+ {
+  new_node=(struct node*)malloc(sizeof(struct node));
+  printf("\nEnter the data to create:");
+  scanf("%d",&new_node->data);
+  new_node->next=NULL;
+  if(start==NULL)
+  {
+   start=new_node;
+   current=new_node;
+  }
+  else
+  {
+   current->next=new_node;
+   current=new_node;
+  }
+  printf("\nDo you want to create another?");
+  ch=getche();
+ }while(ch!='n');
+}
+void display()
+{
+ struct node *current;
+ printf("\nThe linked list:");
+ current=start;
+ while(current!=NULL)
+ {
+  printf("%d-->",current->data);
+  current=current->next;
+ }
+ printf("NULL");
+}
+void insert_at_beg()
+{
+ struct node *new_node,*current;
+ new_node=(struct node*)malloc(sizeof(struct node));
+ printf("Enter the data to insert at begin:");
+ scanf("%d",&new_node->data);
+ new_node->next=NULL;
+ if(start==NULL)
+ {
+  start=new_node;
+ }
+ else
+ {
+  new_node->next=start;
+  start=new_node;
+ }
+}
+void insert_at_end()
+{
+ struct node *new_node,*current;
+ new_node=(struct node*)malloc(sizeof(struct node));
+ printf("\nEnter the data to insert at an end:");
+ scanf("%d",&new_node->next);
+ new_node->next=NULL;
+ if(start==NULL)
+ {
+  start=new_node;
+ }
+ else
+ {
+  current=start;
+  while(current->next!=NULL)
+  {
+   current=current->next;
+  }
+  current->next=new_node;
+ }
+}
+void insert_at_mid()
+{
+ int i,pos;
+ struct node *q,*new_node,*current;
+ new_node=(struct node*)malloc(sizeof(struct node));
+ printf("\nEnter the data to insert at middle:");
+ scanf("%d",&new_node->data);
+ new_node->next=NULL;
+ if(start==NULL)
+ {
+  start=new_node;
+ }
+ else
+ {
+  printf("Enter the position:");
+  scanf("%d",&pos);
+  current=start;
+  for(i=1;i<pos-1;i++)
+  {
+   current=current->next;
+  }
+  new_node->next=current->next;
+  current->next=new_node;
+ }
+}
+void del_at_beg()
+{
+ struct node *del;
+ del=start;
+ start=start->next;
+ free(del);
+}
+void del_at_mid()
+{
+ struct node *current,*del;
+ int ele;
+ printf("\nEnter element to delete:");
+ scanf("%d",&ele);
+ current=start;
+ while(current->next!=NULL)
+ {
+  if(current->next->data==ele)
+  {
+   del=current->next;
+   current->next=del->next;
+   free(del);
+  }
+  current=current->next;
+ }
+}
+void del_at_end()
+{
+ struct node *current,*del;
+ del=start;
+ while(del->next==NULL)
+ {
+  current=del;
+  del=del->next;
+ }
+ free(del);
+ current->next=NULL;
+}
+void search()
+{
+ int flag=0,num;
+ struct node *current;
+ printf("\nEnter data to search:");
+ scanf("%d",&num);
+ current=start;
+ while(current!=NULL)
+ {
+  if(current->data==num)
+  {
+   flag=1;
+  }
+  current=current->next;
+ }
+ if(flag==1)
+ {
+  printf("\nThe element is present in the list");
+ }
+ else
+ {
+  printf("\nNot found");
+ }
+}
+void count()
+{
+ struct node *current;
+ int length=0;
+ current=start;
+ while(current!=NULL)
+ {
+  length++;
+  current=current->next;
+ }
+ printf("\nLength of linked list:%d",length);
+}
+void main()
+{
+ int choice;
+ clrscr();
+ printf("\n****Singly Linear Linked List****\n");
+ do
+ {
+  printf("\n1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Count 11.Exit");
+  printf("\nEnter your choice:");
+  scanf("%d",&choice);
+  switch(choice)
+  {
+   case 1:
+    create();
+    break;
+   case 2:
+    display();
+    break;
+   case 3:
+    insert_at_beg();
+    break;
+   case 4:
+    insert_at_end();
+    break;
+   case 5:
+    insert_at_mid();
+    break;
+   case 6:
+    del_at_beg();
+    break;
+   case 7:
+    del_at_mid();
+    break;
+   case 8:
+    del_at_end();
+    break;
+   case 9:
+    search();
+    break;
+   case 10:
+    count();
+    break;
+   case 11:
+    exit(0);
+  }
+ }while(choice<12);
+ getch();
+}
+OUTPUT:
+****Singly Linear Linked List****
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Count 11.Exit
+Enter your choice:1
+Enter the data to create:2
+Do you want to create another?y
+Enter the data to create:
+4
+Do you want to create another?y
+Enter the data to create:6
+Do you want to create another?n
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Count 11.Exit
+Enter your choice:2
+The linked list:2-->4-->6-->NULL
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Count 11.Exit
+Enter your choice:3
+Enter the data to insert at begin:1
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Count 11.Exit
+Enter your choice:4
+Enter the data to insert at an end:8
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Count 11.Exit
+Enter your choice:5
+Enter the data to insert at middle:5
+Enter the position:4
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Count 11.Exit
+Enter your choice:2
+The linked list:1-->2-->4-->5-->6-->-8-->NULL
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Delet
+ion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Count 11.Exit
+Enter your choice:6
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Count 11.Exit
+Enter your choice:7
+Enter element to delete:5
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Count 11.Exit
+Enter your choice:8
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Count 11.Exit
+Enter your choice:2
+The linked list:2-->4-->6-->NULL
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Count 11.Exit
+Enter your choice:9
+Enter data to search:4
+The element is present in the list
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Count 11.Exit
+Enter your choice:10
+Length of linked list:3
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Count 11.Exit
+Enter your choice:11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Implementation of Circular Linked list ADT
+
+#include<stdio.h>
+#include<conio.h>
+#include<alloc.h>
+#include<stdlib.h>
+struct node
+{
+ int data;
+ struct node *next;
+}*start=NULL;
+void create()
+{
+ char ch;
+ do
+ {
+  struct node *new_node,*current;
+  new_node=(struct node*)malloc(sizeof(struct node));
+  printf("\nEnter the data to create:");
+  scanf("%d",&new_node->data);
+  if(start==NULL)
+  {
+   new_node->next=new_node;
+   start=new_node;
+  }
+  else
+  {
+   current=start;
+   while(current->next!=start)
+   {
+    current=current->next;
+   }
+   current->next=new_node;
+   new_node->next=start;
+  }
+  printf("\nDo you want to create another?");
+  ch=getche();
+ }while(ch!='n');
+}
+void display()
+{
+ struct node *current;
+ printf("\nThe linked list:");
+ current=start;
+ do
+ {
+  printf("%d-->",current->data);
+  current=current->next;
+ }while(current!=start);
+}
+void insert_at_beg()
+{
+ struct node *new_node,*current;
+ new_node=(struct node*)malloc(sizeof(struct node));
+ printf("Enter the data to insert at begin:");
+ scanf("%d",&new_node->data);
+ new_node->next=NULL;
+ if(start==NULL)
+ {
+  start=new_node;
+  new_node->next=new_node;
+ }
+ else
+ {
+  current=start;
+  while(current->next!=start)
+  {
+   current=current->next;
+  }
+  current->next=new_node;
+  new_node->next=start;
+  start=new_node;
+ }
+}
+void insert_at_end()
+{
+ struct node *new_node,*current;
+ new_node=(struct node*)malloc(sizeof(struct node));
+ if(new_node==NULL)
+  printf("\nFailed to Allocate memory");
+  printf("\nEnter the data to insert at last:");
+  scanf("%d",&new_node->data);
+  new_node->next=NULL;
+ if(start==NULL)
+ {
+  start=new_node;
+  new_node->next=new_node;
+ }
+ else
+ {
+  current=start;
+  while(current->next!=start)
+  {
+   current=current->next;
+  }
+  current->next=new_node;
+  new_node->next=start;
+ }
+}
+void insert_at_mid()
+{
+ int i,pos;
+ struct node *new_node,*current;
+ new_node=(struct node*)malloc(sizeof(struct node));
+ printf("\nEnter the data to insert at middle:");
+ scanf("%d",&new_node->data);
+ if(start==NULL)
+ {
+  start=new_node;
+ }
+ else
+ {
+  printf("Enter the position:");
+  scanf("%d",&pos);
+  current=start;
+  for(i=1;i<pos-1;i++)
+  {
+   current=current->next;
+  }
+  new_node->next=current->next;
+  current->next=new_node;
+ }
+}
+void del_at_beg()
+{
+ struct node *current;
+ current=start;
+ while(current->next!=start)
+ {
+  current=current->next;
+ }
+ start=start->next;
+ free(current->next);
+ current->next=start;
+}
+void del_at_mid()
+{
+ struct node *current,*del;
+ int key;
+ printf("\nEnter element to delete:");
+ scanf("%d",&key);
+ current=start;
+ while(current->next!=start)
+ {
+  if(current->next->data==key)
+  {
+   del=current->next;
+   current->next=del->next;
+   free(del);
+  }
+  current=current->next;
+ }
+}
+void del_at_end()
+{
+ struct node *current,*del;
+ del=start;
+ while(del->next!=start)
+ {
+  current=del;
+  del=del->next;
+ }
+ free(del);
+ current->next=start;
+}
+void search()
+{
+ int flag=0,num;
+ struct node *current;
+ printf("\nEnter data to search:");
+ scanf("%d",&num);
+ current=start;
+ do
+ {
+  if(current->data==num)
+  {
+   flag=1;
+  }
+  current=current->next;
+ } while(current!=start);
+ if(flag==1)
+ {
+  printf("\nThe element is present in the list");
+ }
+ else
+ {
+  printf("\nNot found");
+ }
+}
+void main()
+{
+ int choice;
+ clrscr();
+ printf("\n****Singly Circular Linked List****\n");
+ do
+ {
+  printf("\n1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit");
+  printf("\nEnter your choice:");
+  scanf("%d",&choice);
+  switch(choice)
+  {
+   case 1:
+    create();
+    break;
+   case 2:
+    display();
+    break;
+   case 3:
+    insert_at_beg();
+    break;
+   case 4:
+    insert_at_end();
+    break;
+   case 5:
+    insert_at_mid();
+    break;
+   case 6:
+    del_at_beg();
+    break;
+   case 7:
+    del_at_mid();
+    break;
+   case 8:
+    del_at_end();
+    break;
+   case 9:
+    search();
+    break;
+   case 10:
+    exit(0);
+  }
+ }while(choice<10);
+ getch();
+}
+OUTPUT:
+****Singly Circular Linked List****
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:1
+Enter the data to create:2
+Do you want to create another?y
+Enter the data to create:4
+Do you want to create another?y
+Enter the data to create:6
+Do you want to create another?n
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:2
+The linked list:2-->4-->6-->
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:3
+Enter  the data to insert at begin:1
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:4
+Enter the data to insert at last:8
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:5
+Enter the data to insert at middle:5
+Enter the position:4
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:2
+The linked list:1-->2-->4-->5-->6-->8-->
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:6
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:7
+Enter the element to delete:5
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:8
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:2
+The linked list:2-->4-->6-->	
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:9
+Enter the data to search:4
+The element is present in the list
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Implementation of Doubly Linked list ADT
+
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+struct node
+{
+ int data;
+struct  node *prev;
+ struct node *next;
+}*start=NULL;
+void create()
+{
+ char ch;
+ struct node *current,*new_node;
+ do
+ {
+  new_node=(struct node*)malloc(sizeof(struct node));
+  printf("\nEnter the data to create:");
+  scanf("%d",&new_node->data);
+  new_node->next=NULL;
+  new_node->prev=NULL;
+  if(start==NULL)
+  {
+   start=new_node;
+   current=new_node;
+  }
+  else
+  {
+   current->next=new_node;
+   new_node->prev=current;
+   current=new_node;
+  }
+  printf("\nDo you want to create another?");
+  ch=getche();
+ }while(ch!='n');
+}
+void display()
+{
+ struct node *current;
+ printf("\nThe  Linked  List:");
+ current=start;
+ while(current!=NULL)
+ {
+  printf("%d-->",current->data);
+  current=current->next;
+ }
+ printf("NULL");
+current=start;
+ while(current->next!=NULL)
+ {
+   current=current->next;
+ }
+ printf("\nReverse Direction:");
+ while(current!=NULL)
+ {
+  printf("%d-->",current->data);
+  current=current->prev;
+ }
+ printf("NULL");
+}
+void insert_at_beg()
+{
+ struct node *new_node,*current;
+ new_node=(struct node*)malloc(sizeof(struct node));
+ printf("Enter the data to insert at begin:");
+ scanf("%d",&new_node->data);
+ new_node->next=NULL;
+ new_node->prev=NULL;
+ if(start==NULL)
+ {
+  start=new_node;
+ }
+ else
+ {
+  new_node->next=start;
+  start->prev=new_node;
+  start=new_node;
+ }
+}
+void insert_at_end()
+{
+ struct node *new_node,*current;
+ new_node=(struct node*)malloc(sizeof(struct node));
+ printf("\nEnter the data to insert at an end:");
+ scanf("%d",&new_node->next);
+ new_node->next=NULL;
+ new_node->prev=NULL;
+ if(start==NULL)
+ {
+  start=new_node;
+  current=new_node;
+ }
+ else
+ {
+  current=start;
+  while(current->next!=NULL)
+  {
+   current=current->next;
+  }
+  current->next=new_node;
+  new_node->prev=current;
+ }
+}
+void insert_at_mid()
+{
+ int i,pos;
+ struct node *new_node,*current;
+ new_node=(struct node*)malloc(sizeof(struct node));
+ printf("\nEnter the data to insert at middle:");
+ scanf("%d",&new_node->data);
+ new_node->next=NULL;
+ new_node->prev=NULL;
+ if(start==NULL)
+ {
+  start=new_node;
+  current=new_node;
+ }
+ else
+ {
+  printf("Enter the position:");
+  scanf("%d",&pos);
+  current=start;
+  for(i=1;i<pos-1;i++)
+  {
+   current=current->next;
+  }
+  new_node->next=current->next;
+  current->next->prev=new_node;
+  current->next=new_node;
+  new_node->prev=current;
+ }
+}
+void del_at_beg()
+{
+ struct node *del;
+ del=start;
+ start=start->next;
+ free(del);
+ start->prev=NULL;
+}
+void del_at_mid()
+{
+ struct node *current,*del;
+ int ele;
+ printf("\nEnter element to delete:");
+ scanf("%d",&ele);
+ current=start;
+ while(current->next!=NULL)
+ {
+  if(current->next->data==ele)
+  {
+   del=current->next;
+   current->next=del->next;
+   del->next->prev=current;
+   free(del);
+  }
+  current=current->next;
+ }
+}
+void del_at_end()
+{
+ struct node *current,*del;
+ del=start;
+ while(del->next!=NULL)
+ {
+  current=del;
+  del=del->next;
+ }
+ free(del);
+ current->next=NULL;
+}
+void search()
+{
+ int flag=0,num;
+ struct node *current;
+ printf("\nEnter data to search:");
+ scanf("%d",&num);
+ current=start;
+ while(current!=NULL)
+ {
+  if(current->data==num)
+  {
+   flag=1;
+  }
+  current=current->next;
+ }
+ if(flag==1)
+ {
+  printf("\nThe element is present in the list");
+ }
+ else
+ {
+  printf("\nNot found");
+ }
+}
+void main()
+{
+ int choice;
+ clrscr();
+ printf("\n****Doubly Linear Linked List****\n");
+ do
+ {
+  printf("\n1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit");
+  printf("\nEnter your choice:");
+  scanf("%d",&choice);
+  switch(choice)
+  {
+   case 1:
+    create();
+    break;
+   case 2:
+    display();
+    break;
+   case 3:
+    insert_at_beg();
+    break;
+   case 4:
+    insert_at_end();
+    break;
+   case 5:
+    insert_at_mid();
+    break;
+   case 6:
+    del_at_beg();
+    break;
+   case 7:
+    del_at_mid();
+    break;
+   case 8:
+    del_at_end();
+    break;
+   case 9:
+    search();
+    break;
+   case 10:
+    exit(0);
+  }
+ }while(choice<11);
+ getch();
+}
+OUTPUT:
+****Doubly Linear Linked List****
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:1
+Enter the data to create:2
+Do you want to create another?y
+Enter the data to create:
+4
+Do you want to create another?y
+Enter the data to create:6
+Do you want to create another?n
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:2
+The linked list:2-->4-->6-->NULL
+Reverse Direction:6-->4-->2-->NULL
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:3
+Enter the data to insert at begin:1
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:4
+Enter the data to insert at an end:8
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:5
+Enter the data to insert at middle:5
+Enter the position:4
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:2
+The linked list:1-->2-->4-->5-->6-->-8-->NULL
+Reverse Direction:8-->6-->5-->4-->2-->1-->NULL
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Delet
+ion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:6
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:7
+Enter element to delete:5
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:8
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:2
+The linked list:2-->4-->6-->NULL
+Reverse Direction:6-->4-->2-->NULL
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:9
+Enter data to search:4
+The element is present in the list
+1.Create 2.Display 3.Insert at begin 4.Insert at last 5.Insert at middle 6.Deletion at begin 7.Deletion at middle 8.Deletion at end 9.Search 10.Exit
+Enter your choice:10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Array Implementation Of Stack
+
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#define size 5
+struct stack
+{
+ int s[size];
+ int top;
+}st;
+int stfull()
+{
+ if(st.top>=size-1)
+  return 1;
+ else
+  return 0;
+}
+void push(int item)
+{
+ st.top++;
+ st.s[st.top]=item;
+}
+int stempty()
+{
+ if(st.top==-1)
+  return 1;
+ else
+  return 0;
+}
+int pop()
+{
+ int item;
+ item=st.s[st.top];
+ st.top--;
+ return (item);
+}
+void display()
+{
+ int i;
+ if(stempty())
+  printf("\nStack is empty");
+ else
+ {
+  for(i=st.top;i>=0;i--)
+   printf("\n%d",st.s[i]);
+ }
+}
+void main()
+{
+ int item,choice;
+ st.top=-1;
+ clrscr();
+ printf("****Array Implementation Of Stack****");
+ do
+ {
+  printf("\n1.Push 2.Pop 3.Display 4.Exit");
+  printf("\nEnter your choice:");
+  scanf("%d",&choice);
+  switch (choice)
+  {
+   case 1:
+     printf("\nEnter the item to be pushed:");
+     scanf("%d",&item);
+     if(stfull())
+      printf("\nStack is full!");
+     else
+      push(item);
+     break;
+   case 2:
+     if(stempty())
+      printf("Stack Empty!Underflow!!");
+     else
+      item=pop();
+      printf("\nThe popped element is %d",item);
+     break;
+   case 3:
+     display();
+     break;
+   case 4:
+     exit(0);
+  }
+ }while(choice<5);
+ getch();
+}
+OUTPUT:
+****Array Implementation Of Stack****
+1.Push 2.Pop 3.Display 4.Exit
+Enter your choice:1
+Enter the item to be pushed:2
+Enter your choice:1
+Enter the item to be pushed:4
+Enter your choice:1
+Enter the item to be pushed:6
+Enter your choice:3
+6
+4
+2
+Enter your choice:2
+The popped element is 6
+Enter your choice:3
+4
+2
+Enter your choice:4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Linked List Implementation Of Stack
+
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+struct node
+{
+ int data;
+ struct node *next;
+}*top=NULL,*temp;
+void push(int data)
+{
+ temp=(struct node*)malloc(sizeof(struct node));
+ temp->data=data;
+ temp->next=top;
+ top=temp;
+}
+void pop()
+{
+ temp=top;
+ if(top!=NULL)
+ {
+  printf("The popped element is %d",top->data);
+  top=top->next;
+  free(temp);
+ }
+ else
+ {
+  printf("\nStack Underflow");
+ }
+}
+void display()
+{
+ temp=top;
+ if(temp==NULL)
+ {
+  printf("\nStack is empty\n");
+ }
+ while(temp!=NULL)
+ {
+  printf("%d-->",temp->data);
+  temp=temp->next;
+ }
+}
+void main()
+{
+ int choice,data;
+ clrscr();
+ printf("****Linked List Implementation of Stack****");
+ do
+ {
+  printf("\n1.Push 2.Pop 3.Display 4.Exit");
+  printf("\nEnter your choice:");
+  scanf("%d",&choice);
+  switch(choice)
+  {
+   case 1:
+     printf("Enter a new element:");
+     scanf("%d",&data);
+     push(data);
+     break;
+   case 2:
+     pop();
+     break;
+   case 3:
+     display();
+     break;
+   case 4:
+     exit(0);
+  }
+ }while(choice<5);
+ getch();
+}
+OUTPUT:
+****Linked List Implementation Of Stack****
+1.Push 2.Pop 3.Display 4.Exit
+Enter your choice:1
+Enter a new element:2
+Enter your choice:1
+Enter a new element:4
+Enter your choice:1
+Enter a new element:6
+Enter your choice:3
+6-->4-->2-->
+Enter your choice:2
+The popped element is 6
+Enter your choice:3
+4-->2-->
+Enter your choice:4
+
+
+
+
+
+
+Implementation of binary tree
+#include <stdio.h>
+#include <stdlib.h>
+struct node {
+    int data;
+    struct node* left;
+    struct node* right;
+};
+struct node* createNode(value){
+    struct node* newNode = malloc(sizeof(struct node));
+    newNode->data = value;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+struct node* insertLeft(struct node *root, int value) {
+    root->left = createNode(value);
+    return root->left;
+} 
+struct node* insertRight(struct node *root, int value){
+    root->right = createNode(value);
+    return root->right;
+}
+int main(){
+ struct node *root = createNode(1);
+insertLeft(root, 2);
+insertRight(root, 3);
+ printf("The elements of tree are %d %d %d", root->data, root->left->data, root->right->data);
+}
+OUTPUT:
+the element of tree are 1 2 3
+
+
+Implementation of Binary Search Tree
+
+#include<stdio.h>
+#include<conio.h>
+#include<process.h>
+#include<alloc.h>
+struct tree
+{
+int data;
+struct tree *lchild;
+struct tree *rchild;
+}*t,*temp;
+int element;
+void inorder(struct tree *);
+void preorder(struct tree *);
+void postorder(struct tree *);
+struct tree * create(struct tree *, int);
+struct tree * find(struct tree *, int);
+struct tree * insert(struct tree *, int);
+struct tree * del(struct tree *, int);
+struct tree * findmin(struct tree *);
+struct tree * findmax(struct tree *);
+void main()
+{
+int ch;
+do
+{
+printf("\n\t\t\tBINARY SEARCH TREE");
+printf("\n\t\t\t****** ****** ****");
+printf("\nMain Menu\n");
+printf("\n1.Create\n2.Insert\n3.Delete\n4.Find\n5.FindMin\n6.FindMax");
+printf("\n7.Inorder\n8.Preorder\n9.Postorder\n10.Exit\n");
+printf("\nEnter ur choice :");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1:
+printf("\nEnter the data:");
+scanf("%d",&element);
+t=create(t,element);
+inorder(t);
+break;
+case 2:
+printf("\nEnter the data:");
+scanf("%d",&element);
+t=insert(t,element);
+inorder(t);
+break;
+case 3:
+printf("\nEnter the data:");
+scanf("%d",&element);
+t=del(t,element);
+inorder(t);
+break;
+case 4:
+printf("\nEnter the data:");
+scanf("%d",&element);
+temp=find(t,element);
+if(temp->data==element)
+printf("\nElement %d is at %d",element,temp);
+else
+printf("\nElement is not found");
+break;
+case 5:
+temp=findmin(t);
+printf("\nMax element=%d",temp->data);
+break;
+case 6:
+temp=findmax(t);
+printf("\nMax element=%d",temp->data);
+break;
+case 7:
+inorder(t);
+break;
+case 8:
+preorder(t);
+break;	
+case 9:
+postorder(t);
+break;
+case 10:
+exit(0);
+}
+}while(ch<=10);
+}
+struct tree * create(struct tree *t, int element)
+{
+t=(struct tree *)malloc(sizeof(struct tree));
+t->data=element;
+t->lchild=NULL;
+t->rchild=NULL;
+return t;
+}
+struct tree * find(struct tree *t, int element)
+{
+if(t==NULL)
+return NULL;
+if(element<t->data)
+return(find(t->lchild,element));
+else
+if(element>t->data)
+return(find(t->rchild,element));
+else
+return t;
+}
+struct tree *findmin(struct tree *t)
+{
+if(t==NULL)
+return NULL;
+else
+if(t->lchild==NULL)
+return t;
+else
+return(findmin(t->lchild));
+}
+struct tree *findmax(struct tree *t)
+{
+if(t!=NULL)
+{
+while(t->rchild!=NULL)
+t=t->rchild;
+}
+return t;
+}
+struct tree *insert(struct tree *t,int element)
+{
+if(t==NULL)
+{
+t=(struct tree *)malloc(sizeof(struct tree));
+t->data=element;
+t->lchild=NULL;
+t->rchild=NULL;
+return t;
+}
+else
+{
+if(element<t->data)
+{
+t->lchild=insert(t->lchild,element);
+}
+else
+if(element>t->data)
+{
+t->rchild=insert(t->rchild,element);
+}
+else
+if(element==t->data)
+{
+printf("element already present\n");
+}
+return t;
+}
+}
+struct tree * del(struct tree *t, int element)
+{
+if(t==NULL)
+printf("element not found\n");
+else
+if(element<t->data)
+t->lchild=del(t->lchild,element);
+else
+if(element>t->data)
+t->rchild=del(t->rchild,element);
+else
+if(t->lchild&&t->rchild)
+{
+temp=findmin(t->rchild);
+t->data=temp->data;
+t->rchild=del(t->rchild,t->data);
+}
+else	
+{
+temp=t;
+if(t->lchild==NULL)
+t=t->rchild;
+else
+if(t->rchild==NULL)
+t=t->lchild;
+free(temp);
+}
+return t;
+}
+void inorder(struct tree *t)
+{
+if(t==NULL)
+return;
+else
+{
+inorder(t->lchild);
+printf("\t%d",t->data);
+inorder(t->rchild);
+}
+}
+void preorder(struct tree *t)
+{
+if(t==NULL)
+return;
+else
+{
+printf("\t%d",t->data);
+preorder(t->lchild);
+preorder(t->rchild);
+}
+}
+void postorder(struct tree *t)
+{
+if(t==NULL)
+return;
+else
+{
+postorder(t->lchild);
+postorder(t->rchild);
+printf("\t%d",t->data);
+}
+}
+OUTPUT:
+BINARY SEARCH TREE
+************************
+1.create
+2.insert
+3.delete
+4.find
+5.find min
+6.find max
+7.inorder
+8.pre order
+9.post order
+10.exit
+Enter ur choice:1
+Enter the data: 10
+Enter ur choice:2
+Enter the data: 20
+10 20
+Enter ur choice:2
+Enter the data: 30
+10 20 30
+Enter ur choice:2
+Enter the data: 25
+10 20 25 30
+Enter ur choice:4
+Enter the data: 25
+Element 25 is at 2216
+Enter ur choice:5
+Min element:10
+Enter ur choice:7
+10 20 25 30
+Enter ur choice:8
+10 20 30 25
+Enter ur choice:9
+25 30 20 10
+Enter ur choice:3
+Enter the data:10
+20 25 30
+Enter ur choice:10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Implementation of AVL tree
+#include<stdio.h>
+ typedef struct node
+{
+    int data;
+    struct node *left,*right;
+    int ht;
+}node;
+ node *insert(node *,int);
+node *Delete(node *,int);
+void preorder(node *);
+void inorder(node *);
+int height( node *);
+node *rotateright(node *);
+node *rotateleft(node *);
+node *RR(node *);
+node *LL(node *);
+node *LR(node *);
+node *RL(node *);
+int BF(node *);
+ int main()
+{
+    node *root=NULL;
+    int x,n,i,op;
+    
+    do
+    {
+        printf("\n1)Create:");
+        printf("\n2)Insert:");
+        printf("\n3)Delete:");
+        printf("\n4)Print:");
+        printf("\n5)Quit:");
+        printf("\n\nEnter Your Choice:");
+        scanf("%d",&op);
+        
+        switch(op)
+        {
+            case 1: printf("\nEnter no. of elements:");
+                    scanf("%d",&n);
+                    printf("\nEnter tree data:");
+                    root=NULL;
+                    for(i=0;i<n;i++)
+                    {
+                        scanf("%d",&x);
+                        root=insert(root,x);
+                    }
+                    break;
+                
+            case 2: printf("\nEnter a data:");
+                    scanf("%d",&x);
+                    root=insert(root,x);
+                    break;
+                    
+            case 3: printf("\nEnter a data:");
+                    scanf("%d",&x);
+                    root=Delete(root,x);
+                    break;
+            
+            case 4: printf("\nPreorder sequence:\n");
+                    preorder(root);
+                    printf("\n\nInorder sequence:\n");
+                    inorder(root);
+                    printf("\n");
+                    break;            
+        }
+    }while(op!=5);
+    
+    return 0;
+}
+ node * insert(node *T,int x)
+{
+    if(T==NULL)
+    {
+        T=(node*)malloc(sizeof(node));
+        T->data=x;
+        T->left=NULL;
+        T->right=NULL;
+    }
+    else
+        if(x > T->data)        // insert in right subtree
+        {
+            T->right=insert(T->right,x);
+            if(BF(T)==-2)
+                if(x>T->right->data)
+                    T=RR(T);
+                else
+                    T=RL(T);
+        }
+        else
+            if(x<T->data)
+            {
+                T->left=insert(T->left,x);
+                if(BF(T)==2)
+                    if(x < T->left->data)
+                        T=LL(T);
+                    else
+                        T=LR(T);
+            }
+                T->ht=height(T);
+                return(T);
+}
+ node * Delete(node *T,int x)
+{
+    node *p;
+        if(T==NULL)
+    {
+        return NULL;
+    }
+    else
+        if(x > T->data)        // insert in right subtree
+        {
+            T->right=Delete(T->right,x);
+            if(BF(T)==2)
+                if(BF(T->left)>=0)
+                    T=LL(T);
+                else
+                    T=LR(T);
+        }
+        else
+            if(x<T->data)
+            {
+                T->left=Delete(T->left,x);
+                if(BF(T)==-2)    //Rebalance during windup
+                    if(BF(T->right)<=0)
+                        T=RR(T);
+                    else
+                        T=RL(T);
+            }
+            else
+            {
+                //data to be deleted is found
+                if(T->right!=NULL)
+                {    //delete its inorder succesor
+                    p=T->right;
+                    
+                    while(p->left!= NULL)
+                        p=p->left;
+                    
+                    T->data=p->data;
+                    T->right=Delete(T->right,p->data);
+                    
+                    if(BF(T)==2)//Rebalance during windup
+                        if(BF(T->left)>=0)
+                            T=LL(T);
+                        else
+                            T=LR(T);\
+                }
+                else
+                    return(T->left);
+            }
+    T->ht=height(T);
+    return(T);
+}
+ int height(node *T)
+{
+    int lh,rh;
+    if(T==NULL)
+        return(0);
+        if(T->left==NULL)
+        lh=0;
+    else
+        lh=1+T->left->ht;
+        
+    if(T->right==NULL)
+        rh=0;
+    else
+        rh=1+T->right->ht;
+    
+    if(lh>rh)
+        return(lh);
+        return(rh);
+}
+ node * rotateright(node *x)
+{
+    node *y;
+    y=x->left;
+    x->left=y->right;
+    y->right=x;
+    x->ht=height(x);
+    y->ht=height(y);
+    return(y);
+}
+ node * rotateleft(node *x)
+{
+    node *y;
+    y=x->right;
+    x->right=y->left;
+    y->left=x;
+    x->ht=height(x);
+    y->ht=height(y);
+        return(y);
+}
+ node * RR(node *T)
+{
+    T=rotateleft(T);
+    return(T);
+}
+ node * LL(node *T)
+{
+    T=rotateright(T);
+    return(T);
+}
+ node * LR(node *T)
+{
+    T->left=rotateleft(T->left);
+    T=rotateright(T);
+        return(T);
+}
+ node * RL(node *T)
+{
+    T->right=rotateright(T->right);
+    T=rotateleft(T);
+    return(T);
+}
+ int BF(node *T)
+{
+    int lh,rh;
+    if(T==NULL)
+        return(0);
+ 
+    if(T->left==NULL)
+        lh=0;
+    else
+        lh=1+T->left->ht;
+     if(T->right==NULL)
+        rh=0;
+    else
+        rh=1+T->right->ht;
+     return(lh-rh);
+}
+ void preorder(node *T)
+{
+    if(T!=NULL)
+    {
+        printf("%d(Bf=%d)",T->data,BF(T));
+        preorder(T->left);
+        preorder(T->right);
+    }
+}
+ void inorder(node *T)
+{
+    if(T!=NULL)
+    {
+        inorder(T->left);
+        printf("%d(Bf=%d)",T->data,BF(T));
+        inorder(T->right);
+    }
+}
+OUTPUT:
+1)create
+2)insert
+3)delete
+4)print
+5)exit
+Enter ur choice:1
+Enter no of elements:4
+Enter tree data:7 12 4 9
+Enter ur choice:4
+Preorder sequence:
+7(bf=-1)4(bf=0)12(bf=1)9(bf=0)
+Inorder sequence:
+4(bf=0)7(bf=-1)9(bf=0)12(bf=1)
+Enter ur choice:5
+
+Priority queue using heap
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#include<process.h>
+struct heapnode
+{
+	int capacity;
+	int size;
+	int *elements;
+};
+int isFull(struct heapnode *h)
+{
+	if(h->capacity==h->size)
+		return 1;
+	else
+		return 0;
+}
+int isEmpty(struct heapnode *h)
+{
+	if(h->size==0)
+		return 1;
+	else
+		return 0;
+}
+void display(struct heapnode *h)
+{
+	printf("\nPriority Queue Display :");
+	if(isEmpty(h))
+	{
+		printf("\nPriority queue is empty");
+		return;
+	}
+	else
+	for(int i=1;i<=h->size;i++)
+		printf("%d\t",h->elements[i]);
+}
+struct heapnode * initialize()
+{
+	struct heapnode *t;
+	int maxelements;
+	printf("\nEnter the Size of the Priority queue :");
+	scanf("%d",&maxelements);
+	if(maxelements<5)
+	{
+		printf("Priority queue size is to small");
+		getch();
+		exit(0);
+	}
+	t=(struct heapnode *)malloc(sizeof(struct heapnode *));
+	if(t==NULL)
+	{
+		printf("out of space!");
+		getch();
+		exit(0);
+	}
+	t->elements=(int *)malloc((maxelements+1)*sizeof(int));
+	if(t->elements==NULL)
+	{
+		printf("Out of space");
+		getch();
+		exit(0);
+	}
+	t->capacity=maxelements;
+	t->size=0;
+	t->elements=0;
+	return t;
+}
+void insert(int x,struct heapnode *h)
+{
+	int i;
+	if(isFull(h))
+	{
+		printf("Priority queue is full");
+		return;
+	}
+	for(i=++h->size;h->elements[i/2]>x;i/=2)
+		h->elements[i]=h->elements[i/2];
+	h->elements[i]=x;
+}
+int deleteMin(struct heapnode *h)
+{
+	int i,child;
+	int MinElement,LastElement;
+	if(isEmpty(h))
+	{
+		printf("Priority queue is empty");
+		return 0;
+	}
+	MinElement=h->elements[1];
+	LastElement=h->elements[h->size--];
+	for(i=1;i*2<=h->size;i=child)
+	{
+		child=i*2;
+		if(child!=h->size&&h->elements[child+1]<h->elements[child])
+			child++;
+		if(LastElement>h->elements[child])
+			h->elements[i]=h->elements[child];
+		else
+			break;
+	}
+	h->elements[i]=LastElement;
+	return MinElement;
+}
+void main()
+{
+	int ch,ins,del;
+	struct heapnode *h;
+	clrscr();
+	printf("\nPriority Queue using Heap");
+	h=initialize();
+	while(1)
+	{
+		printf("\n1. Insert\n2. DeleteMin\n3. Display\n4. Exit");
+		printf("\nEnter u r choice :");
+		scanf("%d",&ch);
+		switch(ch)
+		{
+			case 1:
+				printf("\nEnter the element:");
+				scanf("%d",&ins);
+				insert(ins,h);
+				break;
+			case 2:
+				del=deleteMin(h);
+				printf("\nDeleted element is %d",del);
+				getch();
+				break;
+			case 3:
+				display(h);
+				getch();
+				break;
+			case 4:
+				exit(0);
+		}
+	}
+}
+OUTPUT:
+Priority queue using heap
+Enter the size of priority queue:14
+1.insert
+2.delete min
+3.display
+4.exit
+Enter ur choice:1
+Enter the data: 10
+Enter ur choice:1
+Enter the data: 34
+Enter ur choice:1
+Enter the data: 24
+Enter ur choice:1
+Enter the data: 67
+Enter ur choice:3
+Priority queue display:10 34 24 67
+Enter ur choice:2
+Deleted element is:10
+Enter ur choice:2
+Deleted element is:24
+Enter ur choice:3
+Priority queue display:34 67
+Enter ur choice:4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Implementation of Breadth First Search
+#include<stdio.h>
+int a[20][20], q[20], visited[20], n, i, j, f = 0, r = -1;
+void bfs(int v)
+ {
+	for(i = 1; i <= n; i++)
+		if(a[v][i] && !visited[i])
+			q[++r] = i;
+	if(f <= r) {
+		visited[q[f]] = 1;
+		bfs(q[f++]);
+	}
+}
+void main() 
+{
+	int v;
+	printf("\n Enter the number of vertices:");
+	scanf("%d", &n);
+		for(i=1; i <= n; i++) {
+		q[i] = 0;
+		visited[i] = 0;
+	}
+	printf("\n Enter graph data in matrix form:\n");
+	for(i=1; i<=n; i++) {
+		for(j=1;j<=n;j++) {
+			scanf("%d", &a[i][j]);
+		}
+	}
+	printf("\n Enter the starting vertex:");
+	scanf("%d", &v);
+	bfs(v);
+	printf("\n The node which are reachable are:\n");
+	
+	for(i=1; i <= n; i++) {
+		if(visited[i])
+			printf("%d\t", i);
+		else {
+			printf("\n Bfs is not possible. Not all nodes are reachable");
+			break;
+		}
+	}
+}
+OUTPUT:
+Enter the number of vertices:4
+Enter graph data in matrix form:
+1 1 1 1
+0 1 0 0
+0 0 1 1
+0 0 0 1
+Enter the starting vertex:1
+The node which are reachable are:
+1 2 3 4 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Implementation of Depth First Search
+#include<stdio.h>
+void DFS(int);
+int G[10][10],visited[10],n;    //n is no of vertices and graph is sorted in array G[10][10]
+ void main()
+{
+    int i,j;
+    printf("Enter number of vertices:");
+   
+    scanf("%d",&n);
+   //read the adjecency matrix
+    printf("\nEnter adjecency matrix of the graph:");
+   for(i=0;i<n;i++)
+       for(j=0;j<n;j++)
+            scanf("%d",&G[i][j]);
+     //visited is initialized to zero
+   for(i=0;i<n;i++)
+        visited[i]=0;
+ 
+    DFS(0);
+}
+ void DFS(int i)
+{
+    int j;
+    printf("\n%d",i);
+    visited[i]=1;    
+    for(j=0;j<n;j++)
+       if(!visited[j]&&G[i][j]==1)
+            DFS(j);}
+
+OUTPUT:
+Enter number of vertices:8
+Enter adjacency matrix of the graph:0 1 1 1 1 0 0 0 
+1 0 0 0 0 1 0 0 
+1 0 0 0 0 1 0 0 
+1 0 0 0 0 0 1 0 
+0 1 1 0 0 0 0 1
+0 0 1 1 0 0 0 1
+0 0 0 1 1 0 0 0
+0 
+1 
+5
+2
+7
+6
+3
+4
+Process returned 8(0*8) execution time:64.785s
+Press any key to continue
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Bubble Sort
+#include<stdio.h>
+#include<conio.h>
+void main()
+{
+  int n,temp,i,j,a[20];
+  clrscr();
+  printf("\n Enter n value: ");
+  scanf("%d",&n);
+  printf("Enter elements:");
+  for(i=0;i<n;i++)
+  scanf("%d",&a[i]);
+ for(i=0;i<n;i++)
+  for(j=i+1;j<n;j++)
+  {
+  if(a[i]>a[j])
+  {
+  temp=a[i];
+  a[i]=a[j];
+  a[j]=temp;
+  }
+  }
+  printf("After sorting: ");
+  for(i=0;i<n;i++)
+  printf(" %d",a[i]);
+  getch();
+}
+OUTPUT:
+Enter n value:5
+Enter elements:
+34 56 12 9 58
+After sorting:
+9 12 34 56 58
+
+
+
+
+
+
+
+
+
+
+Selection Sort
+#include<stdio.h>
+#include<conio.h>
+void main()
+ {
+    int a[100],i,j,n,temp;
+    clrscr();
+    printf("Enter the number of elements to be sorted: ");
+    scanf("%d",&n);
+    printf("entetr the elements");
+    for(i=0;i<n;++i)
+      {
+       scanf("%d",&a[i]);
+      }
+    for(i=0;i<n;i++)
+    for(j=i+1;j<n;j++)
+     {
+       if(a[i]>a[j])
+     {
+      temp=a[i];
+      a[i]=a[j];
+      a[j]=temp;
+    }
+    }
+    printf("In ascending order: ");
+    for(i=0;i<n;i++)
+    printf("%d  ",a[i]);
+    getch();
+}
+OUTPUT:
+Enter the number of elements to be sorted:4
+Enter the elements: 34 767 12 0
+In ascending order:
+0 12 34 767
+
+
+
+
+
+
+
+
+
+Insertion Sort
+#include<stdio.h>
+#include<conio.h>
+void main()
+{
+ int a[10],i,j,key,n;
+ clrscr();
+ printf("\nEnter the n value:\n");
+ scanf("%d",&n);
+ printf("\nenter the elements");
+ for (i=0;i<n;i++)
+ scanf("%d",&a[i]);
+ for(i=1;i<n;i++)
+ {
+  key=a[i];
+  j=i-1;
+  while(j>=0 && key<a[j])
+  {
+   a[j+1]=a[j];
+   j=j-1;
+   }
+  a[j+1]=key;
+ }
+ printf("\n\nElements after sorting: \n");
+ for(i=0;i<n;i++)
+ printf("%d\n",a[i]);
+ getch();
+}
+OUTPUT:
+Enter n value:5
+Enter elements: 
+65 45 12 9 41
+After sorting:
+9 12 41 45 65
+
+
+
+
+
+
+
+
+
+
+Shell Sort
+#include<stdio.h>
+#include<conio.h>
+void main()
+{
+int a[30],i,j,k,temp,n;
+clrscr();
+printf("\nenter the no of elements");
+scanf("%d",&n);
+printf("\nenter the elements");
+for(i=0;i<n;i++)
+scanf("%d",&a[i]);
+for(i=n/2;i>0;i=i/2)
+{
+for(j=i;j<n;j++)
+{
+for(k=j-i;k>=0;k=k-i)
+{
+if(a[k+i]>=a[k])
+break;
+else
+{temp=a[k];
+a[k]=a[k+i];
+a[k+i]=temp;   }}}}
+printf("\n the sorted elements are\n");
+for(i=0;i<n;i++)
+printf("%d\t",a[i]);
+getch();}
+OUTPUT:
+Enter the number of elements:4
+Enter elements:
+78 43 12 8 5
+Sorted elements are:
+5 8 12 43 78
+
+
+
+
+
+
+
+
+
+Radix Sort
+#include<stdio.h>
+#include<conio.h>
+void main()
+{
+int a[100][100],r=0,c=0,i,sz,b[50],temp;
+clrscr();
+printf("enter the size of array:");
+scanf("%d",&sz);
+for(r=0;r<100;r++)
+{
+for(c=0;c<100;c++)
+{
+a[r][c]=0;
+}}
+printf("\n enter elements");
+for(i=0;i<sz;i++)
+{
+scanf("%d",&b[i]);
+r=b[i]/100;
+c=b[i]%100;
+a[r][c]=b[i];
+}
+printf("\n the sorted elements are\n");
+for(r=0;r<100;r++)
+{
+for(c=0;c<100;c++)
+{
+for(i=0;i<sz;i++)
+{
+if(a[r][c]==b[i])
+{
+printf("\n%d",a[r][c]);
+}
+}
+}
+}
+getch();
+}
+
+OUTPUT:
+Enter n value:5
+Enter elements: 
+65 45 12 9 41
+After sorting:
+9 12 41 45 65
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Linear Serach
+#include <stdio.h>
+#include<conio.h>
+void main()
+{
+   int a[100], search, i, n;
+   clrscr();
+   printf("Enter the number of elements in array\n");
+   scanf("%d",&n);
+   printf("Enter elements:");
+     for (i = 0; i < n; i++)
+      scanf("%d", &a[i]);
+   printf("Enter the number to search\n");
+   scanf("%d", &search);
+   for (i = 0; i < n; i++)
+   {
+      if (a[i] == search)     /* if required element found */
+      {
+	 printf("%d is present at location %d.\n", search, i+1);
+	 break;
+      }
+   }
+   if (i == n)
+      printf("%d is not present in array.\n", search);
+   getch();
+}
+OUTPUT:
+Enter number of elements: 5
+Enter elements:67 23 43 65 6
+Enter number to search:23
+23 is present at location 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+Binary Search
+#include <stdio.h>
+#include<conio.h>
+void main()
+{
+   int i, first, last, middle, n, search, a[100];
+   clrscr();
+   printf("Enter number of elements\n");
+   scanf("%d",&n);
+   printf("Enter Elements:");
+   for ( i = 0 ; i < n ; i++ )
+   scanf("%d",&a[i]);
+   printf("Enter value to find\n");
+   scanf("%d",&search);
+   first = 0;
+   last = n - 1;
+   middle = (first+last)/2;
+   while( first <= last )
+   {
+      if ( a[middle] < search )
+	 first = middle + 1;
+      else if ( a[middle] == search )
+      {
+	 printf("%d found at location %d.\n", search, middle+1);
+	 break;
+      }
+      else
+	 last = middle - 1;
+   middle = (first + last)/2;
+   }
+   if ( first > last )
+      printf("Not found! %d is not present in the list.\n", search);
+getch();
+}
+ OUTPUT:
+Enter number of elemnts: 5
+Enter elements:
+1 3 5 7 89
+Enter value to find:3
+3 is found at location 2
+
+
+
+
+Implementation of Hashing - Separate Chaining
+#include<stdio.h>
+#include<stdlib.h>
+ #define LIMIT 30
+ enum record_status {EMPTY, DELETED, OCCUPIED};
+ struct Employee
+{
+      int employee_id, employee_age;
+      char employee_name[30];
+};
+ struct Record
+{
+      struct Employee info;
+      enum record_status status;
+}; 
+ int hash_function(int key)
+{
+      return (key % LIMIT);
+}
+ int search_records(int key, struct Record hash_table[])
+{
+      int count, temp, position;
+      temp = hash_function(key); 
+      position = temp;
+      for(count = 1; count != LIMIT - 1; count++)
+      {
+            if(hash_table[position].status == EMPTY) 
+            {
+                  return -1;
+            }
+            if(hash_table[position].info.employee_id == key)
+            {
+                  return position;
+            }
+            position = (temp + count) % LIMIT; 
+      }
+      return -1;
+}
+ 
+void insert_records(struct Employee emprec, struct Record hash_table[])
+{
+      int count, position, temp;
+      int key = emprec.employee_id;
+      temp = hash_function(key); 
+      position = temp; 
+      for(count = 1; count != LIMIT - 1; count++)
+      {
+            if(hash_table[position].status == EMPTY || hash_table[position].status == DELETED)
+            {
+                  hash_table[position].info = emprec;
+                  hash_table[position].status = OCCUPIED; 
+                  printf("\nRecord Inserted into Hash Table\n");
+                  return;
+            }
+            if(hash_table[position].info.employee_id == key)
+            {
+                  printf("\nDuplicate Record cannot be Inserted\n");
+                  return;
+            }
+            position = (temp + count) % LIMIT; 
+      }
+      printf("\nHash Table Limit Exceeded\n");
+}
+ 
+void display_records(struct Record hash_table[])
+{
+      int count;
+      printf("\nHash Table\n");
+      for(count = 0; count < LIMIT; count++)
+      {
+            printf("[%d]:\t", count);
+            if(hash_table[count].status == OCCUPIED) 
+            {
+                  printf("Occupied - ID: %d Name: %s Age: %d",hash_table[count].info.employee_id, hash_table[count].info.employee_name, hash_table[count].info.employee_age);
+            }
+            else if(hash_table[count].status == DELETED)
+            {
+                  printf("\nRecord is Deleted\n");
+            }
+            else
+            {
+                  printf("\nHash Table is Empty\n");
+            }
+      }
+}
+ 
+void delete_records(int key, struct Record hash_table[])
+{
+      int position = search_records(key, hash_table);
+      if(position == -1)
+      {
+            printf("\nKey Not Found\n");
+      }
+      else
+      {
+            hash_table[position].status = DELETED;
+      }
+}
+ 
+int main()
+{
+      int count, key, option;
+      struct Record hash_table[LIMIT];
+      struct Employee emprec;
+      for(count = 0; count <= LIMIT - 1; count++)
+      {
+            hash_table[count].status = EMPTY;
+      } 
+      while(1)
+      {
+            printf("1. Insert a Record\n");
+            printf("2. Delete a Record\n");
+            printf("3. Search a Record\n");
+            printf("4. Display All Records\n");
+            printf("5. Exit\n");
+            printf("Enter Your Option:\t");
+            scanf("%d", &option);
+            switch(option)
+            {
+                  case 1: printf("\nEnter Employee ID:\t");
+                          scanf("%d", &emprec.employee_id); 
+                          printf("Enter Employee Name:\t");
+                          scanf("%s", emprec.employee_name);
+                          printf("Enter Employee Age:\t");
+                          scanf("%d", &emprec.employee_age);
+                          insert_records(emprec, hash_table);
+                          break;
+ 
+                  case 2: printf("\nEnter the Key to Delete:\t");
+                          scanf("%d", &key);
+                          delete_records(key, hash_table);
+                          break;
+ 
+                  case 3: printf("\nEnter the Key to Search:\t");
+                          scanf("%d", &key);
+                          count = search_records(key, hash_table);
+                          if(count == -1)
+                          {
+                                printf("\nRecord Not Found\n");
+                          }
+                          else
+                          {
+                                printf("\nRecord Found at Index Position:\t%d\n", count);
+                          }
+                          break;
+ 
+                  case 4: display_records(hash_table);
+                          break;
+ 
+                  case 5: exit(1);
+            }
+      }
+      return 0;
+}
+
+OUTPUT:
+1.insert a record
+2.delete a record
+3. search a record
+4. display all record
+5.exit
+Enter ur option:1
+Enter employee id:1
+Enter employee name:Rahul
+Enter employee age:25
+Enter ur option:5
+
+
+
+
+
+
+
+Implementation of Hashing - Open Addressing
+  #include <stdio.h>
+  #include <string.h>
+  #include <stdlib.h>
+  struct hash *hashTable = NULL;
+  int eleCount = 0;
+  struct node {
+        int key, age;
+        char name[100];
+        struct node *next;
+  };
+  struct hash {
+        struct node *head;
+        int count;
+  };
+  struct node * createNode(int key, char *name, int age) {
+        struct node *newnode;
+        newnode = (struct node *)malloc(sizeof(struct node));
+        newnode->key = key;
+        newnode->age = age;
+        strcpy(newnode->name, name);
+        newnode->next = NULL;
+        return newnode;
+  }
+  void insertToHash(int key, char *name, int age) {
+        int hashIndex = key % eleCount;
+        struct node *newnode =  createNode(key, name, age);
+        /* head of list for the bucket with index "hashIndex" */
+        if (!hashTable[hashIndex].head) {
+                hashTable[hashIndex].head = newnode;
+                hashTable[hashIndex].count = 1;
+                return;
+        }
+        /* adding new node to the list */
+        newnode->next = (hashTable[hashIndex].head);
+        hashTable[hashIndex].head = newnode;
+        hashTable[hashIndex].count++;
+        return;
+  }
+  void deleteFromHash(int key) {
+        /* find the bucket using hash index */
+        int hashIndex = key % eleCount, flag = 0;
+        struct node *temp, *myNode;
+        myNode = hashTable[hashIndex].head;
+        if (!myNode) {
+                printf("Given data is not present in hash Table!!\n");
+                return;
+        }
+        temp = myNode;
+        while (myNode != NULL) {
+                       if (myNode->key == key) {
+                        flag = 1;
+                        if (myNode == hashTable[hashIndex].head)
+                                hashTable[hashIndex].head = myNode->next;
+                        else
+                                temp->next = myNode->next;
+
+                        hashTable[hashIndex].count--;
+                        free(myNode);
+                        break;
+                }
+                temp = myNode;
+                myNode = myNode->next;
+        }
+        if (flag)
+                printf("Data deleted successfully from Hash Table\n");
+        else
+                printf("Given data is not present in hash Table!!!!\n");
+        return;
+  }
+  void searchInHash(int key) {
+        int hashIndex = key % eleCount, flag = 0;
+        struct node *myNode;
+        myNode = hashTable[hashIndex].head;
+        if (!myNode) {
+                printf("Search element unavailable in hash table\n");
+                return;
+        }
+        while (myNode != NULL) {
+                if (myNode->key == key) {
+                        printf("VoterID  : %d\n", myNode->key);
+                        printf("Name     : %s\n", myNode->name);
+                        printf("Age      : %d\n", myNode->age);
+                        flag = 1;
+                        break;
+                }
+                myNode = myNode->next;
+        }
+        if (!flag)
+                printf("Search element unavailable in hash table\n");
+        return;
+  }
+  void display() {
+        struct node *myNode;
+        int i;
+        for (i = 0; i < eleCount; i++) {
+                if (hashTable[i].count == 0)
+                        continue;
+                myNode = hashTable[i].head;
+                if (!myNode)
+                        continue;
+                printf("\nData at index %d in Hash Table:\n", i);
+                printf("VoterID     Name          Age   \n");
+                printf("--------------------------------\n");
+                while (myNode != NULL) {
+                        printf("%-12d", myNode->key);
+                        printf("%-15s", myNode->name);
+                        printf("%d\n", myNode->age);
+                        myNode = myNode->next;
+                }
+        }
+        return;
+  }
+  int main() {
+        int n, ch, key, age;
+        char name[100];
+        printf("Enter the number of elements:");
+        scanf("%d", &n);
+        eleCount = n;
+        /* create hash table with "n" no of buckets */
+        hashTable = (struct hash *)calloc(n, sizeof (struct hash));
+        while (1) {
+                printf("\n1. Insertion\t2. Deletion\n");
+                printf("3. Searching\t4. Display\n5. Exit\n");
+                printf("Enter your choice:");
+                scanf("%d", &ch);
+                switch (ch) {
+                        case 1:
+                                printf("Enter the key value:");
+                                scanf("%d", &key);
+                                getchar();
+                                printf("Name:");
+                                fgets(name, 100, stdin);
+                                name[strlen(name) - 1] = '\0';
+                                printf("Age:");
+                                scanf("%d", &age);
+                                /*inserting new node to hash table */
+                                insertToHash(key, name, age);
+                                break;
+                        case 2:
+                                printf("Enter the key to perform deletion:");
+                                scanf("%d", &key);
+                                /* delete node with "key" from hash table */
+                                deleteFromHash(key);
+                                break;
+
+                        case 3:
+                                printf("Enter the key to search:");
+                                scanf("%d", &key);
+                                searchInHash(key);
+                                break;
+                        case 4:
+                                display();
+                                break;
+                        case 5:
+                                exit(0);
+                        default:
+                                printf("U have entered wrong option!!\n");
+                                break;
+                }
+        }
+        return 0;
+  }
+
+ OUTPUT:
+enter number of elements:3
+1.insertion
+2.deletion
+3.serching
+4.display
+5.exit
+Enter ur choice:1
+Name: ram
+Age: 34
+Enter ur choice:5
+Converting Infix to Postfix operations
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+#include<math.h>
+#include<ctype.h>
+int top;
+char s[80],result[80];
+char pop()
+{
+return (s[top--]);
+}
+void push(char ele)
+{
+s[++top]=ele;
+}
+int priority(char ch)
+{  switch (ch)
+{
+case '+':return(4);
+case '-':return(4);
+case '*':return(5);
+case '/':return(5);
+case '(': return(0);
+case ')': return(0);
+case '^': return(6);
+}
+return(0); }
+void main()
+{  int len,i,j;
+char a[80];
+clrscr();
+printf("\n enter the expressions:");
+scanf("%s",a);
+len=strlen(a);
+a[len]=')';
+a[len+1]='\0';
+push('(');
+i=0;j=0;
+while(a[i])
+{
+if(isalpha(a[i]))
+result[j++]=a[i];
+else
+{
+if(a[i]=='(')
+push('(');
+else
+{ if(a[i]=='+'||a[i]=='-'||a[i]=='*'||a[i]=='/'||a[i]=='^')
+{
+if(priority(a[i])>priority(s[top]))
+push(a[i]);
+else
+{
+while(priority(a[i])<priority(s[top]))
+result[j++]=pop();
+if(priority(a[i])==priority(s[top]))
+result[j++]=pop();
+push(a[i]);
+} }
+else {
+if(a[i]==')')
+{
+while(priority(a[i])<priority(s[top]))
+{
+result[j++]=pop(); }
+pop();
+} } } }
+i++;
+}
+result[j]='\0';
+printf("\n postfix expression is:%s",result);
+getch();
+}
+ OUTPUT:
+Enter the expression:a*b
+Postfix expression is:ab*
+
+
+
+
+
+
+
+
+
+
+Implementation of Queue
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#define size 5
+struct queue
+{
+int que[size];
+int front ,rear;
+}q;
+int qfull()
+{
+if(q.rear==size-1)
+return 1;
+else
+return 0;
+}
+void enqueue(int item)
+{
+q.front=0;
+q.rear=q.rear+1;
+q.que[q.rear]=item;
+}
+int qempty()
+{
+if(q.front==-1)
+return 1;
+else
+return 0;
+}
+void dequeue()
+{
+int item;
+item=q.que[q.front];
+q.front=q.front+1;
+printf("\nThe Deleted element is :%d",item);
+}
+void display()
+{
+int i;
+for(i=q.front;i<=q.rear;i++)
+printf("%d",q.que[i]);
+}
+void main()
+{
+int item,choice;
+q.front=-1;
+q.rear=-1;
+clrscr();
+prntf("\nIMPLEMENTATION OF QUEUE");
+while(1)
+{
+printf("\n MAIN MENU");
+printf("\n1.Enqueue\n2.Dequeue\n3.Display\n4.exit");
+scanf("%d",&choice);
+switch(choice)
+{
+case 1:
+if(qfull())
+printf("\nQueue is Full");
+else
+{
+printf("\nEnter the number to be inserted:");
+scanf("%d",&item);
+enqueue(item);
+}
+break;
+case 2:
+if(qempty())
+printf("\nQueue Underflow");
+else
+dequeue();
+break;
+case 3:
+if(qempty())
+printf("\nQueue is empty");
+else
+display();
+break;
+case 4:
+exit(0);
+break;
+}
+}
+}
+OUTPUT:
+IMPLEMENTATION OF QUEUE
+ MAIN MENU
+1.Enqueue
+2.Dequeue
+3.Display
+4.exit
+enter ur choice:1
+enter the number to insert : 0 4
+ MAIN MENU
+1.Enqueue
+2.Dequeue
+3.Display
+4.exit
+enter ur choice:3
+0 4
+ MAIN MENU
+1.Enqueue
+2.Dequeue
+3.Display
+4.exit
+enter ur choice:2
+the deleted element is:0
+ MAIN MENU
+1.Enqueue
+2.Dequeue
+3.Display
+4.exit
+enter ur choice:3
+4
+ MAIN MENU
+1.Enqueue
+2.Dequeue
+3.Display
+4.exit
+enter ur choice:4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Linked List Implementation of Queue
+#include<stdio.h>
+#include<conio.h>
+struct node
+{
+int data;
+struct node *next;
+}*front=NULL,*rear=NULL,*new_node;
+void enqueue()
+{
+new_node=(struct node*)malloc(sizeof(struct node));
+printf("\Enter the data to create:");
+scanf("%d",&new_node->data);
+new_node->next=NULL;
+if(rear==NULL)
+{
+rear=new_node;
+front=new_node;
+}
+else
+{
+rear->next=new_node;
+rear=new_node;
+}}
+void dequeue()
+{
+struct node*temp;
+if(front==NULL)
+printf("\n\nQueue is empty\n" );
+else
+{
+printf("\nItem deleted:%d\n");
+temp=front;
+front=front->next;
+free(temp);
+}
+}
+void display()
+{
+struct node *temp=front;
+if(temp==NULL)
+printf("\n\nQueue is empty\n");
+else
+{
+printf("\n\n");
+while(temp!=NULL)
+{
+printf("%d\t",temp->data);
+temp=temp->next;
+}
+}
+}
+void main()
+{
+int ch;
+clrscr();
+do
+{
+printf("\n\n1.Enqueue\n2./Dequeue\n3.Display\n4.Exit\n");
+printf("\nEnter your choice:");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1:
+enqueue();
+break;
+case 2:
+dequeue();
+break;
+case 3:
+display();
+break;
+case 4:
+exit(0);
+default:
+printf("\n\nInvalide choice.Please try again...\n");
+}}
+while(ch<4);
+getch();
+}
+
+OUTPUT:
+1.Enqueue
+2.Dequeue
+3.Display
+4.exit
+enter  choice:1
+enter item:10
+enter choice:3
+10
+enter choice:1
+enter item:20
+enter choice:3
+10 20
+enter choice:4
+
+Implementation of Circular Queue
+#include<stdio.h>
+#include<conio.h>
+#define size 3
+int queue[size],front=-1,rear=-1;
+void enqueue()
+{
+int element;
+if(front==(rear+1)%size)
+{
+printf("Queue is full");
+}
+else
+{
+printf("Enter Element:");
+scanf("%d",&element);
+if(front==-1)
+front=rear=0;
+else
+rear=(rear+1)%size;
+queue[rear]=element;
+}
+}
+void dequeue()
+{
+int element;
+if(front==-1)
+printf("\nQueue is empty");
+else
+{
+element=queue[front];
+front=(front+1) %size;
+printf("\nDeleted element is:%d",element);
+}
+}
+void display()
+{
+int i;
+if(front==-1)
+printf("\nQueue is Empty");
+else
+{
+i=front;
+while(i!=rear)
+{
+printf("%d",queue[i]);
+i=(i+1)%size;
+}
+printf("%d",queue[i]);
+}
+}
+void main()
+{
+int choice;
+clrscr();
+while(1)
+printf("\nCircular Queue\n Main memnu\n");
+printf("\n1.Enqueue \n2.DEqueue\n3.Display\n4.Exit");
+printf("Enter ur choice:");
+scanf("%d",&choice);
+switch(choice)
+{
+case 1:
+   enqueue();
+   break;
+case 2:
+   dequeue();
+   break;
+case 3:
+   display();
+   break;
+case 4:
+   exit(0);
+   break;
+}
+getch();
+}
+OUTPUT:
+circular queue
+main menu
+1.Enqueue
+2.Dequeue
+3.Display
+4.exit
+enter ur choice:1
+enter the element:2
+circular queue
+main menu
+1.Enqueue
+2.Dequeue
+3.Display
+4.exit
+enter ur choice:3
+2
+circular queue
+main menu
+1.Enqueue
+2.Dequeue
+3.Display
+4.exit
+enter ur choice:2
+the deleted element is:2
+circular queue 
+1.Enqueue
+2.Dequeue
+3.Display
+4.exit
+enter ur choice:4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Linked list implementation of Dequeue
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#define MAX 5
+int q[MAX],front=-1;
+void insert_rear()
+{
+int no;
+printf("\nEnter value to insert:");
+scaanf("%d",&no);
+if(rear==MAX-1)
+{
+printf("\nQueue is Overflow");
+}
+else
+[
+if(front==-1)
+{
+front=0;
+}
+rear=rear+1;
+q[rear]=no;
+}
+}
+void insert_front()
+{
+printf("\nCannot add value at fron end");
+}
+else
+{
+int no;
+printf("\nEnter value to insert:");
+scanf("5d",&no);
+front=front-1;
+q[front]=no;
+}
+}
+void delete_rear()
+{
+int no;
+if(front==reat)
+{
+printf("\nQueue isUnderflow\n");
+}
+else
+{
+no=q[rear];
+rear=rear-1;
+printf("The deleted item is %d",no);
+}
+}
+void delete_front()
+{
+int no;
+if(front==rear)
+{
+printf("\nCannnot delete value at front end\n");
+}
+else
+{
+no=q[front];
+front=front+1;
+printf("\n Cannot delete value at front end\n");
+}
+else
+[
+no=q[front];
+front=front+1;
+printf("The deleted item is %d",no);
+}
+}
+void display()
+{
+int i;
+if(front==-1)
+{
+printf("\nQueue is empty\n");
+}
+else
+{
+printf("\nOutput\n");
+for(i=front;i<=rear;i++)
+{
+printf("%d",q[i]);
+}
+}
+}
+void main()
+{
+int ch;
+clrscr();
+while(1)
+{
+printf("\nDEQ menu");
+printf("\n1.Insert Rear\n2.Insert Front\n3.Delete Rear\n4.Delete front\n5.Display\n6.Exit"):
+printf("\nEnter ur choice:");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1:
+   insert_rear();
+   break;
+   case 2:
+   insert_front();
+   break;
+   case 3:
+   delete_rear();
+   break;
+   case 4:
+   delete_front();
+   break;
+   case 5:
+   display();
+   break;
+   case 6:
+   break;
+   default:
+   printf("\nWrong Choice\n");
+   }
+   }
+   }
+OUTPUT:
+DEQ menu
+1.Insert Rear
+2.Insert Front
+3.Delete Rear
+4.Delete front
+5.Display
+6.Exit
+Enter ur choice:1
+enter value to insert:75
+enter ur choice:3
+queue is underflow!
+enter ur choice:6
+
+
+
+
+
+
+
+
+                                      Applications of Graph - N-Queen Problem
+#define N 4 
+#include<stdio.h> 
+#include<stdbool.h> 
+  void printSolution(int board[N][N]) 
+{ 
+    for (int i = 0; i < N; i++) 
+    { 
+        for (int j = 0; j < N; j++) 
+            printf(" %d ", board[i][j]); 
+        printf("\n"); 
+    } 
+} 
+  bool isSafe(int board[N][N], int row, int col) 
+{ 
+    int i, j; 
+      for (i = 0; i < col; i++) 
+        if (board[row][i]) 
+            return false; 
+      for (i=row, j=col; i>=0 && j>=0; i--, j--) 
+        if (board[i][j]) 
+            return false; 
+      for (i=row, j=col; j>=0 && i<N; i++, j--) 
+        if (board[i][j]) 
+            return false; 
+      return true; 
+} 
+  bool solveNQUtil(int board[N][N], int col) 
+{ 
+     if (col >= N) 
+        return true; 
+   for (int i = 0; i < N; i++) 
+    { 
+        if ( isSafe(board, i, col) ) 
+        { 
+            board[i][col] = 1; 
+    if ( solveNQUtil(board, col + 1) ) 
+                return true; 
+              board[i][col] = 0; // BACKTRACK 
+        } 
+    } 
+      return false; 
+} 
+  bool solveNQ() 
+{ 
+    int board[N][N] = { {0, 0, 0, 0}, 
+        {0, 0, 0, 0}, 
+        {0, 0, 0, 0}, 
+        {0, 0, 0, 0} 
+    }; 
+      if ( solveNQUtil(board, 0) == false ) 
+    { 
+      printf("Solution does not exist"); 
+      return false; 
+    } 
+      printSolution(board); 
+    return true; 
+} 
+  int main() 
+{ 
+    solveNQ(); 
+    return 0; 
+} 
+
+
+OUTPUT
+
+ The 1 values indicate placements of queens
+ 0  0  1  0 
+ 1  0  0  0 
+ 0  0  0  1 
+ 0  1  0  0 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
